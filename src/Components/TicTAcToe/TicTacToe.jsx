@@ -153,7 +153,7 @@ const TicTacToe = () => {
       <h1 className="title">Tic Tac Toe <span>React</span></h1>
       {gameOver && (
         <div className="game-over">
-          {winner === "draw" ? "Game ended in a draw!" : `Player ${winner} wins!`}
+          {winner === "draw" ? "He He He LOOSERR!!" : `Player ${winner} wins!`}
         </div>
       )}
       <div className="board">
