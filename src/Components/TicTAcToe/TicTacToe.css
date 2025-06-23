@@ -21,7 +21,7 @@
     padding-left: 15px;
 }
 
-.reset {
+.start, .reset {
     width: min(250px, 80%); /* Responsive width */
     height: 50px;
     border: none;
@@ -35,10 +35,20 @@
     transition: all 0.3s ease;
 }
 
-.reset:hover {
+.start:hover, .reset:hover {
     background: #26ffcb;
     color: #1f3540;
     transform: scale(1.05);
+}
+
+.start {
+    background: #26ffcb;
+    color: #1f3540;
+}
+
+.start:hover {
+    background: #1f3540;
+    color: #26ffcb;
 }
 
 .board {
@@ -120,12 +130,12 @@
     }
     
     .boxes {
-        border-width: 2px; /* Thinner borders on mobile */
+        border-width: 2px; 
     }
     
-    .reset {
-        height: 45px; /* Slightly smaller button */
-        margin: 15px auto; /* Less vertical space */
+    .start, .reset {
+        height: 45px; 
+        margin: 15px auto;
     }
 }
 
@@ -136,7 +146,7 @@
         margin: 10px auto;
     }
     
-    .reset {
+    .start, .reset {
         height: 40px;
         font-size: 1rem;
     }

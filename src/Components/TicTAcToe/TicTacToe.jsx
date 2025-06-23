@@ -9,16 +9,17 @@ const TicTacToe = () => {
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
   // Handle AI moves after player moves
   useEffect(() => {
-    if (!isPlayerTurn && !gameOver && !isProcessing) {
+    if (gameStarted && !isPlayerTurn && !gameOver && !isProcessing) {
       const timer = setTimeout(() => {
         makeAiMove();
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [isPlayerTurn, gameOver, isProcessing]);
+  }, [isPlayerTurn, gameOver, isProcessing, gameStarted]);
 
   const checkWinner = (currentBoard) => {
     const winPatterns = [
@@ -104,7 +105,7 @@ const TicTacToe = () => {
   };
 
   const handleClick = (index) => {
-    if (gameOver || !isPlayerTurn || board[index] !== "" || isProcessing) return;
+    if (!gameStarted || gameOver || !isPlayerTurn || board[index] !== "" || isProcessing) return;
     
     setIsProcessing(true);
     const newBoard = [...board];
@@ -121,18 +122,24 @@ const TicTacToe = () => {
     setIsProcessing(false);
   };
 
+  const startGame = () => {
+    setGameStarted(true);
+    setIsPlayerTurn(true);
+  };
+
   const resetGame = () => {
     setBoard(Array(9).fill(""));
     setIsPlayerTurn(true);
     setGameOver(false);
     setWinner(null);
     setIsProcessing(false);
+    setGameStarted(false);
   };
 
   const renderBox = (index) => {
     return (
       <div 
-        className={`boxes ${!isPlayerTurn || gameOver || board[index] !== "" ? 'disabled' : ''}`}
+        className={`boxes ${!gameStarted || !isPlayerTurn || gameOver || board[index] !== "" ? 'disabled' : ''}`}
         onClick={() => handleClick(index)}
       >
         {board[index] === "x" && <img src={cross_icon} alt="X" />}
@@ -166,7 +173,11 @@ const TicTacToe = () => {
           {renderBox(8)}
         </div>
       </div>
-      <button className="reset" onClick={resetGame}>Reset</button>
+      {!gameStarted ? (
+        <button className="start" onClick={startGame}>Start Game</button>
+      ) : (
+        <button className="reset" onClick={resetGame}>Reset</button>
+      )}
     </div>
   );
 };
